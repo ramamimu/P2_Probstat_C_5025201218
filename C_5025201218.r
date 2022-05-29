@@ -79,6 +79,9 @@ t.test(z)
 # dalam sampel penelitian ini cukup tinggi. Tingginya nilai selisih variabel X dan Y menunjukkan
 # tingkat pengaruh yang signifikan secara statistika terhadap kadar saturasi oksigen
 
+# ================================================================================================================================
+# ================================================================================================================================
+
 # 2a. Apakah Anda setuju dengan klaim tersebut?
 # hypothesized value 
 mu0 = 20000
@@ -116,6 +119,9 @@ pval = pnorm(z)
 pval
 # P value close to 1 suggests no difference between the groups other than due to chance.
 
+# ================================================================================================================================
+# ================================================================================================================================
+
 # 3a. H0 dan H1
 nbandung=19
 meanbandung=3.64
@@ -146,7 +152,7 @@ pval = 2*pt(z_stat, 2)
 
 # 3d. Nilai Kritikal
 # .05 significance level
-alpha = .05                                            
+alpha = .05
 # per-one tail .025 significance level
 # Two-Tailed 0.05 significance level
 t.half.alpha = qt(1-alpha/2, df=2)                   
@@ -173,6 +179,9 @@ c(-t.half.alpha, t.half.alpha)
 # kucing1 <- c(19, 18.6, 18.3, 18, 18.2, 18.6, 18.5, 18.2, 18.4, 18.9, 19.9, 18.5, 16.9, 18, 17.3, 17.8, 20, 19, 19.2, 18.9 ,17.5, 18.1, 18, 18.1, 17.4, 17.9, 17.4, 16.7, 19.7, 19.3, 19, 19.4, 19.8, 19.3, 18.5)
 # kucing2 <- c(18.3, 17.9, 17.6, 17.3, 17.5, 17.9, 17.8, 17, 17.7, 18.2, 19.2, 17.8, 16.2, 17.3, 16.6, 17.1, 19.3, 18.3,18.5,18,16.8,17.2,17.3,17.4,16.7,17.2,16.7,16.2,19,18.6,18.3,18.7,19.1,18.6,17.8)
 # kucing3 <- c(18, 18.6, 18.3, 18, 18.2, 18.2, 18.5, 18.2, 19.2, 18.5, 19.9, 18.5, 16.9, 18, 17, 17.2, 20, 19, 19.2, 18.9, 17.5, 18.1, 18, 18.1, 17.4, 17.9, 17.4, 16.5, 19.7, 19, 19, 19.7, 19.8, 19.3, 17)
+
+# ================================================================================================================================
+# ================================================================================================================================
 
 # 4a. Buatlah masing masing jenis spesies menjadi 3 subjek "Grup" (grup 1,grup
 # 2,grup 3). Lalu Gambarkan plot kuantil normal untuk setiap kelompok dan
@@ -354,3 +363,100 @@ summary(submodel)
 
 # 4f. Visualisasikan data dengan ggplot2
 ggplot(my_data, aes(Group, Length, colour = Group)) + geom_point()
+
+# ================================================================================================================================
+# ================================================================================================================================
+
+# 5a. Buatlah plot sederhana untuk visualisasi data
+light_data <- read.csv(file.choose())
+light_data
+#    Glass Temp Light
+# 1      A  100   580
+# 2      A  100   568
+# 3      A  100   570
+# 4      B  100   550
+# 5      B  100   530
+# 6      B  100   579
+# 7      C  100   546
+# 8      C  100   575
+# 9      C  100   599
+# 10     A  125  1090
+# 11     A  125  1087
+# 12     A  125  1085
+# 13     B  125  1070
+# 14     B  125  1035
+# 15     B  125  1000
+# 16     C  125  1045
+# 17     C  125  1053
+# 18     C  125  1066
+# 19     A  150  1392
+# 20     A  150  1380
+# 21     A  150  1386
+# 22     B  150  1328
+# 23     B  150  1312
+# 24     B  150  1299
+# 25     C  150   867
+# 26     C  150   904
+# 27     C  150   889
+ggplot(data = light_data) +  geom_point(mapping = aes(x = Temp, y = Light))
+
+# 5b. Lakukan uji ANOVA dua arah
+res.aov2 <- aov(Light ~ Glass + Temp, data = light_data)
+summary(res.aov2)
+#             Df  Sum Sq Mean Sq F value   Pr(>F)    
+# Glass        2  150865   75432   3.557   0.0451 *  
+# Temp         1 1779756 1779756  83.932 3.89e-09 ***
+# Residuals   23  487710   21205                     
+# ---
+# Signif. codes:  0 ‘***’ 0.001 ‘**’ 0.01 ‘*’ 0.05 ‘.’ 0.1 ‘ ’ 1
+# From the ANOVA table we can conclude that both Glass and Light are statistically significant. 
+# Light is the most significant factor variable. These results would lead us to believe that changing delivery methods (Glass) 
+# or the Light of on the data, will impact significantly.
+
+# 5c. Tampilkan tabel dengan mean dan standar deviasi keluaran cahaya untuk
+# setiap perlakuan (kombinasi kaca pelat muka dan suhu operasi)
+temp_data <- light_data
+mean.glass <- with(temp_data, mean(Glass))
+mean.temp <- with(temp_data, mean(Temp))
+mean.light <- with(temp_data, mean(Light))
+mean.all <- c(mean.glass, mean.temp, mean.light)
+temp_data2 <- rbind(temp_data, mean.all)
+row.names(temp_data2)[dim(temp_data2)[1]] <- "means"
+# ------------------------------------------------------------
+sd.glass <- with(temp_data, sd(Glass))
+sd.temp <- with(temp_data, sd(Temp, na.rm = T))
+sd.light <- with(temp_data, sd(Light, na.rm = T))
+sd.temp_data <- c(sd.glass,sd.temp,sd.light)
+temp_data2 <- rbind(temp_data2,sd.temp_data)
+row.names(temp_data2)[dim(temp_data2)[1]] <- "SD"
+temp_data2
+#       Glass      Temp     Light
+# 1         A 100.00000  580.0000
+# 2         A 100.00000  568.0000
+# 3         A 100.00000  570.0000
+# 4         B 100.00000  550.0000
+# 5         B 100.00000  530.0000
+# 6         B 100.00000  579.0000
+# 7         C 100.00000  546.0000
+# 8         C 100.00000  575.0000
+# 9         C 100.00000  599.0000
+# 10        A 125.00000 1090.0000
+# 11        A 125.00000 1087.0000
+# 12        A 125.00000 1085.0000
+# 13        B 125.00000 1070.0000
+# 14        B 125.00000 1035.0000
+# 15        B 125.00000 1000.0000
+# 16        C 125.00000 1045.0000
+# 17        C 125.00000 1053.0000
+# 18        C 125.00000 1066.0000
+# 19        A 150.00000 1392.0000
+# 20        A 150.00000 1380.0000
+# 21        A 150.00000 1386.0000
+# 22        B 150.00000 1328.0000
+# 23        B 150.00000 1312.0000
+# 24        B 150.00000 1299.0000
+# 25        C 150.00000  867.0000
+# 26        C 150.00000  904.0000
+# 27        C 150.00000  889.0000
+# means  <NA> 125.00000  940.1852
+# SD     <NA>  20.80126  304.9798
