@@ -169,3 +169,163 @@ c(-t.half.alpha, t.half.alpha)
 # Hence, at .05 significance level, we do not reject the null hypothesis 
 # that the mean Bandung and Bali does not differ.
 
+# Dataset no 4
+# kucing1 <- c(19, 18.6, 18.3, 18, 18.2, 18.6, 18.5, 18.2, 18.4, 18.9, 19.9, 18.5, 16.9, 18, 17.3, 17.8, 20, 19, 19.2, 18.9 ,17.5, 18.1, 18, 18.1, 17.4, 17.9, 17.4, 16.7, 19.7, 19.3, 19, 19.4, 19.8, 19.3, 18.5)
+# kucing2 <- c(18.3, 17.9, 17.6, 17.3, 17.5, 17.9, 17.8, 17, 17.7, 18.2, 19.2, 17.8, 16.2, 17.3, 16.6, 17.1, 19.3, 18.3,18.5,18,16.8,17.2,17.3,17.4,16.7,17.2,16.7,16.2,19,18.6,18.3,18.7,19.1,18.6,17.8)
+# kucing3 <- c(18, 18.6, 18.3, 18, 18.2, 18.2, 18.5, 18.2, 19.2, 18.5, 19.9, 18.5, 16.9, 18, 17, 17.2, 20, 19, 19.2, 18.9, 17.5, 18.1, 18, 18.1, 17.4, 17.9, 17.4, 16.5, 19.7, 19, 19, 19.7, 19.8, 19.3, 17)
+
+# 4a. Buatlah masing masing jenis spesies menjadi 3 subjek "Grup" (grup 1,grup
+# 2,grup 3). Lalu Gambarkan plot kuantil normal untuk setiap kelompok dan
+# lihat apakah ada outlier utama dalam homogenitas varians.
+kucing1 <- c(19, 18.6, 18.3, 18, 18.2, 18.6, 18.5, 18.2, 18.4, 18.9, 19.9, 18.5, 16.9, 18, 17.3, 17.8, 20, 19, 19.2, 18.9 ,17.5, 18.1, 18, 18.1, 17.4, 17.9, 17.4, 16.7, 19.7, 19.3, 19, 19.4, 19.8, 19.3, 18.5)
+kucing2 <- c(18.3, 17.9, 17.6, 17.3, 17.5, 17.9, 17.8, 17, 17.7, 18.2, 19.2, 17.8, 16.2, 17.3, 16.6, 17.1, 19.3, 18.3, 18.5, 18, 16.8, 17.2, 17.3, 17.4, 16.7, 17.2, 16.7, 16.2, 19,1 8.6, 18.3, 18.7, 19.1, 18.6, 17.8)
+kucing3 <- c(18, 18.6, 18.3, 18, 18.2, 18.2, 18.5, 18.2, 19.2, 18.5, 19.9, 18.5, 16.9, 18, 17, 17.2, 20, 19, 19.2, 18.9, 17.5, 18.1, 18, 18.1, 17.4, 17.9, 17.4, 16.5, 19.7, 19, 19, 19.7, 19.8, 19.3, 17)
+qqnorm(kucing1)
+qqnorm(kucing2)
+qqnorm(kucing3)
+kucing <- data.frame(grup1 = kucing1, grup2 = kucing2, grup3 = kucing3)
+my_data <- read.delim(file.choose())
+my_data
+#     Group Length
+# 1       1   19.0
+# 2       1   18.6
+# 3       1   18.3
+# 4       1   18.0
+# 5       1   18.2
+# 6       1   18.6
+# 7       1   18.5
+# 8       1   18.2
+# 9       1   18.4
+# 10      1   18.9
+# 11      1   19.9
+# 12      1   18.5
+# 13      1   16.9
+# 14      1   18.0
+# 15      1   17.3
+# 16      1   17.8
+# 17      1   20.0
+# 18      1   19.0
+# 19      1   19.2
+# 20      1   18.9
+# 21      1   17.5
+# 22      1   18.1
+# 23      1   18.0
+# 24      1   18.1
+# 25      1   17.4
+# 26      1   17.9
+# 27      1   17.4
+# 28      1   16.7
+# 29      1   19.7
+# 30      1   19.3
+# 31      1   19.0
+# 32      1   19.4
+# 33      1   19.8
+# 34      1   19.3
+# 35      1   18.5
+# 36      2   18.3
+# 37      2   17.9
+# 38      2   17.6
+# 39      2   17.3
+# 40      2   17.5
+# 41      2   17.9
+# 42      2   17.8
+# 43      2   17.0
+# 44      2   17.7
+# 45      2   18.2
+# 46      2   19.2
+# 47      2   17.8
+# 48      2   16.2
+# 49      2   17.3
+# 50      2   16.6
+# 51      2   17.1
+# 52      2   19.3
+# 53      2   18.3
+# 54      2   18.5
+# 55      2   18.0
+# 56      2   16.8
+# 57      2   17.2
+# 58      2   17.3
+# 59      2   17.4
+# 60      2   16.7
+# 61      2   17.2
+# 62      2   16.7
+# 63      2   16.2
+# 64      2   19.0
+# 65      2   18.6
+# 66      2   18.3
+# 67      2   18.7
+# 68      2   19.1
+# 69      2   18.6
+# 70      2   17.8
+# 71      3   18.0
+# 72      3   18.6
+# 73      3   18.3
+# 74      3   18.0
+# 75      3   18.2
+# 76      3   18.2
+# 77      3   18.5
+# 78      3   18.2
+# 79      3   19.2
+# 80      3   18.5
+# 81      3   19.9
+# 82      3   18.5
+# 83      3   16.9
+# 84      3   18.0
+# 85      3   17.0
+# 86      3   17.2
+# 87      3   20.0
+# 88      3   19.0
+# 89      3   19.2
+# 90      3   18.9
+# 91      3   17.5
+# 92      3   18.1
+# 93      3   18.0
+# 94      3   18.1
+# 95      3   17.4
+# 96      3   17.9
+# 97      3   17.4
+# 98      3   16.5
+# 99      3   19.7
+# 100     3   19.0
+# 101     3   19.0
+# 102     3   19.7
+# 103     3   19.8
+# 104     3   19.3
+# 105     3   17.0
+my_data$Group <- ordered(my_data$Group,
+                         levels = c("1", "2", "3"))
+levels(my_data$Group)
+# [1] "1" "2" "3"
+library(dplyr)
+group_by(my_data, Group) %>%
+    summarise(
+       count = n(),
+       mean = mean(Length, na.rm = TRUE),
+       sd = sd(Length, na.rm = TRUE)
+    )
+# A tibble: 3 x 4
+#   Group count  mean    sd
+#   <ord> <int> <dbl> <dbl>
+# 1 1        35  18.5 0.836
+# 2 2        35  17.7 0.834
+# 3 3        35  18.4 0.921
+library("ggpubr")
+ggboxplot(my_data, x = "Group", y = "Length", 
+          color = "Group", palette = c("#00AFBB", "#E7B800", "#FC4E07"),
+          order = c("1", "2", "3"),
+          ylab = "Length", xlab = "Kucing")
+# There were no extreme outliers
+
+# 4b. carilah atau periksalah Homogeneity of variances nya , Berapa nilai p yang
+# didapatkan? , Apa hipotesis dan kesimpulan yang dapat diambil ?
+
+# 4c. Untuk uji ANOVA (satu arah), buatlah model linier dengan Panjang versus
+# Grup dan beri nama model tersebut model 1.
+
+# 4d. Dari Hasil Poin C, Berapakah nilai-p ? , Apa yang dapat Anda simpulkan
+# dari H0?
+
+# 4e. Verifikasilah jawaban model 1 dengan Post-hoc test Tukey HSD, dari nilai p
+# yang didapatkan apakah satu jenis kucing lebih panjang dari yang lain? Jelaskan.
+
+# 4f. Visualisasikan data dengan ggplot2
