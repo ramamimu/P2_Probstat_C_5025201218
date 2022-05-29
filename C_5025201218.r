@@ -318,14 +318,39 @@ ggboxplot(my_data, x = "Group", y = "Length",
 
 # 4b. carilah atau periksalah Homogeneity of variances nya , Berapa nilai p yang
 # didapatkan? , Apa hipotesis dan kesimpulan yang dapat diambil ?
+leveneTest(Length ~ Group, data = my_data)
+# Levene's Test for Homogeneity of Variance (center = median)
+#        Df F value Pr(>F)
+# group   2  0.1702 0.8438
+#       102 
+# From the output above we can see that the p-value is not less than the significance level of 0.05. 
+# This means that there is no evidence to suggest that the variance across groups is statistically significantly different. 
+# Therefore, we can assume there is no the homogeneity of variances in the different treatment groups.
 
 # 4c. Untuk uji ANOVA (satu arah), buatlah model linier dengan Panjang versus
 # Grup dan beri nama model tersebut model 1.
+model  <- lm(Length ~ Group, data = my_data)
+ggqqplot(residuals(model))
 
 # 4d. Dari Hasil Poin C, Berapakah nilai-p ? , Apa yang dapat Anda simpulkan
 # dari H0?
+shapiro.test(residuals(model))
+# 	Shapiro-Wilk normality test
+# data:  residuals(model)
+# W = 0.98017, p-value = 0.1176
+# The conclusion above, is supported by the Shapiro-Wilk test on the ANOVA residuals (W = 0.98017, p = 0.1176) 
+# which finds no indication that normality is violated.
 
 # 4e. Verifikasilah jawaban model 1 dengan Post-hoc test Tukey HSD, dari nilai p
 # yang didapatkan apakah satu jenis kucing lebih panjang dari yang lain? Jelaskan.
+submodel <- aov(Length~Group, data=data)
+summary(submodel)
+#              Df Sum Sq Mean Sq F value Pr(>F)   
+# Group         2  10.61   5.307   7.098 0.0013 **
+# Residuals   102  76.27   0.748                  
+# ---
+# The observed p-value from the ANOVA table is less than 0.05, 
+# indicating that there is enough evidence to conclude that the group means are not equal.
 
 # 4f. Visualisasikan data dengan ggplot2
+ggplot(my_data, aes(Group, Length, colour = Group)) + geom_point()
